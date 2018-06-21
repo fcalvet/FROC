@@ -122,9 +122,10 @@ def computeFROCfromLists(list_detections,list_gt,allowedDistance):
 def computeConfMatElements(thresholded_proba_map, ground_truth, allowedDistance):
     
     if allowedDistance == 0 and type(ground_truth) == np.ndarray:
-        P = np.count_nonzero(ground_truth)
-        TP = np.count_nonzero(thresholded_proba_map*ground_truth)
-        FP = np.count_nonzero(thresholded_proba_map - (thresholded_proba_map*ground_truth))    
+        intersect_map = thresholded_proba_map*ground_truth
+        P = np.sum(ground_truth)
+        TP = np.sum(intersect_map)
+        FP = np.sum(thresholded_proba_map - intersect_map)    
     else:
     
         #reformat ground truth to a list  
